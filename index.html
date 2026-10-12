@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="London">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.png">
+<title>London</title>
+<style>
+:root{--bg:#ffffff;--fg:#111418;--muted:#4a525c;--line:#cfd5dc;--pri:#0b57d0;--pri-fg:#ffffff;--chk-bg:#fff1cc;--chk-fg:#6b4500;--now:#0b57d0;--soft:#f3f5f8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:calc(env(safe-area-inset-top,0px) + 8px) calc(env(safe-area-inset-bottom,0px) + 40px)}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:calc(env(safe-area-inset-top,0px) + 6px) 6px;margin-top:calc(-1 * env(safe-area-inset-top,0px) - 8px);border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:12px}
+h1{font-size:20px;margin:0}
+.seg{display:flex;gap:6px;flex:1}
+.seg button{flex:1;font:600 16px/1 inherit;min-height:44px;border:2px solid var(--fg);border-radius:10px;background:var(--bg);color:var(--fg)}
+.seg button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+details summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;color:var(--fg)}
+details.before{margin-block:10px;border:1px solid var(--line);border-radius:10px;padding:0 12px}
+details.before ul{margin:0 0 10px;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.leg{font-size:15px;font-weight:600;color:var(--fg);padding:10px 0 8px 14px;border-left:3px solid var(--line);margin-left:20px}
+.onway{font-size:14px;font-weight:400;color:var(--muted);margin-top:4px;max-width:46ch}
+.stop{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;scroll-margin-top:72px}
+.leg{scroll-margin-top:64px}
+.stop.now{border:2px solid var(--now);box-shadow:0 0 0 3px #0b57d022}
+.stop.now .time::after{content:" · now";color:var(--now)}
+.top{display:flex;gap:10px;align-items:baseline}
+.time{font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;color:var(--fg);white-space:nowrap}
+h3{font-size:18px;margin:0;min-width:0}
+h4{font-size:16px;margin:0}
+.why{margin:0}
+.addr{all:unset;box-sizing:border-box;display:block;min-height:36px;padding:6px 0;color:var(--muted);font-size:15px;cursor:pointer}
+.addr .hint{font-size:12px;color:var(--muted);opacity:.8;white-space:nowrap}
+.chk{display:inline-block;font-size:12px;font-weight:600;background:var(--chk-bg);color:var(--chk-fg);border-radius:6px;padding:1px 6px;white-space:nowrap}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{flex:1 1 auto;min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border:1.5px solid var(--line);border-radius:10px;color:var(--fg);background:var(--bg);font:600 16px/1.1 inherit;text-decoration:none;text-align:center}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:var(--pri-fg)}
+.btns.sm .btn{min-height:44px;font-size:15px}
+.call{display:inline-flex;align-items:center;min-height:36px;color:var(--pri);font-weight:600;font-size:15px;text-decoration:none}
+.stop details{border-top:1px solid var(--line)}
+.look{margin:0 0 4px;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.opt{background:var(--soft);border-radius:10px;padding:10px;margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.then{display:none}
+.stop.now .then{display:flex;flex-direction:column;gap:8px;border-top:2px solid var(--now);padding-top:10px;margin-top:2px}
+h2.sec{font-size:20px;margin:32px 0 6px;padding-top:16px;border-top:1px solid var(--line)}
+footer{color:var(--muted);font-size:13px;margin-top:24px}
+.ph{margin:0 0 10px;display:grid;gap:4px}
+.ph dt{font-size:13px;color:var(--muted);margin-top:8px}
+.ph dd{margin:0;font-size:17px;line-height:1.35}
+.ph .say{font-size:13px;color:var(--muted);font-style:italic}
+.lbl{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.see{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--muted);color:var(--muted);border-radius:5px;padding:0 5px;vertical-align:2px}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 14px;border-radius:10px;font-weight:600}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+</style></head>
+<body><div class="wrap">
+<header><div class="hrow"><h1>London</h1></div></header>
+<details class="before"><summary>Before you go</summary><ul><li>Install Santander Cycles, add a card, buy a Day Pass (~£3.50, unlimited rides under an hour each). E-bikes cost ~£1 more.</li><li>Backup bikes: Lime (dockless). In Camden, end the ride in a marked bay.</li><li>Rain: walk to Prufrock instead (~25 min each way) or Uber.</li><li>Book lunch for 5 tonight.</li></ul></details>
+<section data-panel="tue" data-date="2026-10-13"><div class="leg"><div>↓ Santander bike ~10 min from the nearest dock</div><div class="onway"><span class="lbl">On the way</span> Follow the Cycleway 6 signs south. Most of it is a separate lane down Farringdon Road. Leave it at Clerkenwell Road; the Bike route button handles the last turns. Gray&#x27;s Inn Road is the direct line, but it is busy with buses: skip it.</div></div><article class="stop" data-t="07:45" data-day="tue"><div class="top"><span class="time">7:45</span><h3>Prufrock Coffee</h3></div><p class="why">Single origins on espresso and filter, plus guest roasters. Opened by 2009 World Barista Champion Gwilym Davies. Weekdays 7:30–4:30. </p><button class="addr" type="button" data-copy="23-25 Leather Lane, London EC1N 7TE">23-25 Leather Lane, London EC1N 7TE <span class="hint">tap to copy</span></button><div class="btns"><a class="btn pri" href="https://www.google.com/maps/dir/?api=1&destination=51.521661%2C-0.109006&travelmode=bicycling">Bike route</a><a class="btn" href="https://maps.apple.com/?daddr=23-25%20Leather%20Lane%2C%20London%20EC1N%207TE&dirflg=w">Walk</a></div><details><summary>Look (2)</summary><ul class="look"><li>Dock at Hatton Wall (~3 min walk) or Hatton Garden (~2 min). If both are full, the app shows the next one.</li><li>Leather Lane street market sets up from ~10:00 on weekdays. You&#x27;ll be gone by then.</li></ul></details><div class="then"><div><span class="lbl">Then</span> <b>9:10</b> British Library · Santander bike ~12 min · dock at Ossulston St, behind the Library</div><a class="btn pri" href="https://www.google.com/maps/dir/?api=1&origin=51.518825,-0.108028&destination=51.5293%2C-0.128279&travelmode=bicycling">Bike route</a></div></article><div class="leg"><div>↓ Santander bike ~12 min · dock at Ossulston St, behind the Library</div><div class="onway"><span class="lbl">On the way</span> Pick up at Hatton Garden. If it&#x27;s empty, try Hatton Wall; Lime is the fallback. Ride back up Cycleway 6. Cross Euston Road at a signalled crossing; don&#x27;t ride along it.</div></div><article class="stop" data-t="09:10" data-day="tue"><div class="top"><span class="time">9:10</span><h3>British Library</h3></div><p class="why">Doors and Reading Rooms open 9:30 (to 8:00pm Tue). Bring your Reader Pass. </p><button class="addr" type="button" data-copy="96 Euston Road, London NW1 2DB">96 Euston Road, London NW1 2DB <span class="hint">tap to copy</span></button><div class="btns"><a class="btn pri" href="https://www.google.com/maps/dir/?api=1&origin=51.518825,-0.108028&destination=51.5293%2C-0.128279&travelmode=bicycling">Bike route</a><a class="btn" href="https://maps.apple.com/?daddr=96%20Euston%20Road%2C%20London%20NW1%202DB&dirflg=w">Walk</a></div><details><summary>If time (1)</summary><div class="opt"><h4>Origin Coffee, Euston Road shop</h4><p class="why">Inside the Library grounds. Opens 8:00; second cup while you wait for the doors. </p><button class="addr" type="button" data-copy="96 Euston Road, London NW1 2DB">96 Euston Road, London NW1 2DB <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://maps.apple.com/?daddr=96%20Euston%20Road%2C%20London%20NW1%202DB&dirflg=w">Walk</a></div></div></details><div class="then"><div><span class="lbl">Then</span> <b>12:15</b> Lunch (work, 4–5 people) · Walk out</div></div></article><div class="leg"><div>↓ Walk out</div></div><article class="stop" data-t="12:15" data-day="tue"><div class="top"><span class="time">12:15</span><h3>Lunch (work, 4–5 people)</h3></div><p class="why">Sit-down, bookable, all within ~15 min on foot. Book a table for 5. Leave by 2:25 to be back at 2:45. </p><details open><summary>Pick one (4)</summary><div class="opt"><h4>Caravan King&#x27;s Cross</h4><p class="why">~10 min. Big, roomy all-day room, easy for a group, roasts its own coffee. Closest pick. </p><button class="addr" type="button" data-copy="1 Granary Square, London N1C 4AA">1 Granary Square, London N1C 4AA <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://maps.apple.com/?daddr=1%20Granary%20Square%2C%20London%20N1C%204AA&dirflg=w">Walk</a><a class="btn" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=1%20Granary%20Square%2C%20London%20N1C%204AA&dropoff%5Bnickname%5D=Caravan%20King%27s%20Cross">Uber</a></div></div><div class="opt"><h4>Honey &amp; Co</h4><p class="why">~15 min. Middle Eastern, lunch from noon. Kitchen breaks 3:45. Book online. </p><button class="addr" type="button" data-copy="54 Lamb&#x27;s Conduit Street, London WC1N">54 Lamb&#x27;s Conduit Street, London WC1N <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://maps.apple.com/?daddr=54%20Lamb%27s%20Conduit%20Street%2C%20London%20WC1N&dirflg=w">Walk</a><a class="btn" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=54%20Lamb%27s%20Conduit%20Street%2C%20London%20WC1N&dropoff%5Bnickname%5D=Honey%20%26%20Co">Uber</a></div></div><div class="opt"><h4>Café Deco</h4><p class="why">~15 min. Anna Tobias: plain, seasonal, very good cooking. Lunch 12–3, two-hour slots. </p><button class="addr" type="button" data-copy="43 Store Street, London WC1E 7DB">43 Store Street, London WC1E 7DB <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://maps.apple.com/?daddr=43%20Store%20Street%2C%20London%20WC1E%207DB&dirflg=w">Walk</a><a class="btn" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=43%20Store%20Street%2C%20London%20WC1E%207DB&dropoff%5Bnickname%5D=Caf%C3%A9%20Deco">Uber</a></div></div><div class="opt"><h4>Noble Rot</h4><p class="why">~15 min. Good-value set lunch, takes bookings. Quieter room for talking. <span class="chk">check hours</span></p><button class="addr" type="button" data-copy="51 Lamb&#x27;s Conduit Street, London WC1N 3NB">51 Lamb&#x27;s Conduit Street, London WC1N 3NB <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://maps.apple.com/?daddr=51%20Lamb%27s%20Conduit%20Street%2C%20London%20WC1N%203NB&dirflg=w">Walk</a><a class="btn" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=51%20Lamb%27s%20Conduit%20Street%2C%20London%20WC1N%203NB&dropoff%5Bnickname%5D=Noble%20Rot">Uber</a></div></div></details><div class="then"><div><span class="lbl">Then</span> <b>2:45</b> Back at the British Library · Walk back</div><a class="btn pri" href="https://maps.apple.com/?daddr=96%20Euston%20Road%2C%20London%20NW1%202DB&dirflg=w">Walk</a></div></article><div class="leg"><div>↓ Walk back</div></div><article class="stop" data-t="14:45" data-day="tue"><div class="top"><span class="time">2:45</span><h3>Back at the British Library</h3></div><p class="why">Afternoon session. </p><button class="addr" type="button" data-copy="96 Euston Road, London NW1 2DB">96 Euston Road, London NW1 2DB <span class="hint">tap to copy</span></button><div class="btns"><a class="btn pri" href="https://maps.apple.com/?daddr=96%20Euston%20Road%2C%20London%20NW1%202DB&dirflg=w">Walk</a><a class="btn" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=96%20Euston%20Road%2C%20London%20NW1%202DB&dropoff%5Bnickname%5D=Back%20at%20the%20British%20Library">Uber</a></div></article></section>
+<h2 class="sec">When I get the time: clothes</h2><p class="why">Wed–Thu meetings end 5:30 and most shops close at 7, so after work you have about 75 minutes. Walk to one of the first two. The last two need a free afternoon.</p><div class="opt"><h4>Lamb&#x27;s Conduit Street</h4><p class="why">~12 min walk. Small independent menswear: Folk (no. 49, to 7:00), Oliver Spencer, The Content Store, a TOAST menswear pop-up (no. 59). One short street; do all of it. <span class="chk">check hours</span></p><button class="addr" type="button" data-copy="Lamb&#x27;s Conduit Street, London WC1N">Lamb&#x27;s Conduit Street, London WC1N <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://maps.apple.com/?daddr=Lamb%27s%20Conduit%20Street%2C%20London%20WC1N&dirflg=w">Walk</a><a class="btn" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=Lamb%27s%20Conduit%20Street%2C%20London%20WC1N&dropoff%5Bnickname%5D=Lamb%27s%20Conduit%20Street">Uber</a></div></div><div class="opt"><h4>Coal Drops Yard</h4><p class="why">~10 min walk. Shops 11–7. Paul Smith; Beyond Retro vintage (to 8:00 Thu); Honest Jon&#x27;s records. Best on Thursday. <span class="chk">check hours</span></p><button class="addr" type="button" data-copy="Stable Street, London N1C 4AB">Stable Street, London N1C 4AB <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://maps.apple.com/?daddr=Stable%20Street%2C%20London%20N1C%204AB&dirflg=w">Walk</a><a class="btn" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=Stable%20Street%2C%20London%20N1C%204AB&dropoff%5Bnickname%5D=Coal%20Drops%20Yard">Uber</a></div></div><div class="opt"><h4>Clutch Cafe</h4><p class="why">Uber ~12 min. Japanese and Americana workwear: denim, chore coats, boots. Mon–Sat 11–6, so it needs a free afternoon. </p><button class="addr" type="button" data-copy="78-80 Great Portland Street, London W1W 7NT">78-80 Great Portland Street, London W1W 7NT <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=78-80%20Great%20Portland%20Street%2C%20London%20W1W%207NT&dropoff%5Bnickname%5D=Clutch%20Cafe">Uber</a><a class="btn" href="https://maps.apple.com/?daddr=78-80%20Great%20Portland%20Street%2C%20London%20W1W%207NT&dirflg=w">Walk</a></div></div><div class="opt"><h4>Trunk Clothiers</h4><p class="why">Uber ~15 min, Marylebone. Japanese, Italian and Scandinavian makers plus its own label. Mon–Fri 11–7. Call ahead about Paraboot; not confirmed. </p><button class="addr" type="button" data-copy="8 Chiltern Street, London W1U 7PU">8 Chiltern Street, London W1U 7PU <span class="hint">tap to copy</span></button><div class="btns sm"><a class="btn pri" href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=8%20Chiltern%20Street%2C%20London%20W1U%207PU&dropoff%5Bnickname%5D=Trunk%20Clothiers">Uber</a><a class="btn" href="https://maps.apple.com/?daddr=8%20Chiltern%20Street%2C%20London%20W1U%207PU&dirflg=w">Walk</a></div><a class="call" href="tel:+442030305101">Call +442030305101</a></div>
+<footer>Hours come from listings and can drift; “check hours” means unconfirmed. Walk times are estimates. Built Oct 12.</footer>
+</div><script>
+(function(){
+  function show(day){
+    document.querySelectorAll('[data-panel]').forEach(function(p){p.hidden=p.getAttribute('data-panel')!==day});
+    document.querySelectorAll('.seg button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.day===day)});
+  }
+  // London clock picks the day and the current stop.
+  var now=new Date(), parts={};
+  try{new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(now).forEach(function(p){parts[p.type]=p.value});}catch(e){}
+  var ymd=parts.year+'-'+parts.month+'-'+parts.day, hm=(parts.hour||'00')+':'+(parts.minute||'00');
+  var panel=document.querySelector('[data-date="'+ymd+'"]') || document.querySelector('[data-panel]');
+  show(panel.getAttribute('data-panel'));
+  document.querySelectorAll('.seg button').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.day);window.scrollTo(0,0)})});
+  if(panel.getAttribute('data-date')===ymd){
+    var cur=null;
+    panel.querySelectorAll('.stop').forEach(function(s){ if(s.dataset.t<=hm) cur=s; });
+    if(cur){ cur.classList.add('now'); var leg=cur.previousElementSibling; setTimeout(function(){(leg||cur).scrollIntoView({block:'start'})},50); }
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-copy]'); if(!b) return;
+    var t=b.getAttribute('data-copy');
+    function ok(){var d=document.createElement('div');d.className='toast';d.textContent='Address copied';document.body.appendChild(d);setTimeout(function(){d.remove()},1500)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,function(){prompt('Copy:',t)})}else{prompt('Copy:',t)}
+  });
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(function(){})}
+})();
+</script></body></html>
