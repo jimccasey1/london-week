@@ -1,4 +1,4 @@
-var CACHE="london-cf9d83e39136";
+var CACHE="london-dff19c67084b";
 var ASSETS=["./","./index.html","./manifest.webmanifest","./icon.png"];
 self.addEventListener("install",function(e){self.skipWaiting();e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ASSETS)}))});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.map(function(x){return x===CACHE?null:caches.delete(x)}))}).then(function(){return self.clients.claim()}))});
